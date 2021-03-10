@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GIS</title>
+
+    <style>
+        #map{
+            width:100%;
+            height:400px;
+        }
+    </style>
+
+    <!-- Leaflet -->
+    <link rel="stylesheet" href="/leaflet/leaflet.css">
+</head>
+<body>
+    <div id="map"></div>
+
+    <!-- Leaflet -->
+    <script src="/leaflet/leaflet.js"></script>
+
+    <script>
+
+        var map = L.map('map').setView([11.5529, 122.7407], 7);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        L.marker([11.5529, 122.7407]).addTo(map)
+            .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
+            .openPopup();
+
+        L.control.scale().addTo(map);
+    </script>
+</body>
+</html>
