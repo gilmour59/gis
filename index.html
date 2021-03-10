@@ -1,40 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GIS</title>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>GIS</title>
 
-    <style>
-        #map{
-            width:100%;
-            height:400px;
-        }
-    </style>
+        <style>
+            #map{
+                width:100%;
+                height:400px;
+            }
+        </style>
 
-    <!-- Leaflet -->
-    <link rel="stylesheet" href="/leaflet/leaflet.css">
-</head>
-<body>
-    <div id="map"></div>
+        <!-- Leaflet -->
+        <link rel="stylesheet" href="/components/leaflet/leaflet.css">
 
-    <!-- Leaflet -->
-    <script src="/leaflet/leaflet.js"></script>
+        <!-- Bootstrap 3.3.7 -->
+        <link rel="stylesheet" href="/components/bootstrap/dist/css/bootstrap.min.css">
+        
+        <!-- DataTables -->
+        <link rel="stylesheet" href="/components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+        <link rel="stylesheet" href="/components/datatables.net-bs/css/responsive.bootstrap.min.css">
 
-    <script>
+        <!-- jQuery 3 -->
+        <script src="/components/jquery/dist/jquery.min.js"></script>
 
-        var map = L.map('map').setView([11.5529, 122.7407], 7);
+        <!-- Bootstrap 3.3.7 -->
+        <script src="/components/bootstrap/dist/js/bootstrap.min.js"></script>
 
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
+        <!-- SlimScroll -->
+        <script src="/components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 
-        L.marker([11.5529, 122.7407]).addTo(map)
-            .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
-            .openPopup();
+        <!-- FastClick -->
+        <script src="/components/fastclick/lib/fastclick.js"></script>
 
-        L.control.scale().addTo(map);
-    </script>
-</body>
+        <!-- DataTables -->
+        <script src="/components/datatables.net/js/jquery.dataTables.min.js"></script>
+        <script src="/components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+        <script src="/components/datatables.net-bs/js/dataTables.responsive.min.js"></script>
+        <script src="/components/datatables.net-bs/js/responsive.bootstrap.min.js"></script>
+
+        <!-- SweetAlert -->
+        <script src="/components/sweetalert/sweetalert2@10.js"></script>
+
+        <!-- Leaflet -->
+        <script src="/components/leaflet/leaflet.js"></script>
+    </head>
+    <body>
+        <div id="map"></div>
+
+        <button onclick=fullScreenView()>View in fullscreen</button>
+        
+
+        <script>
+
+            var map = L.map('map').setView([11.5529, 122.7407], 7);
+
+            map.zoomControl.setPosition('topright');
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+
+            L.marker([11.5529, 122.7407]).addTo(map)
+                .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
+                .openPopup();
+
+            //add map scale
+            L.control.scale({position : 'bottomleft'}).addTo(map);
+
+            //fullscreen map view
+            var map_id = document.getElementById('map');
+            function fullScreenView(){
+                
+            }
+        </script>
+    </body>
 </html>
