@@ -23,6 +23,9 @@
         <link rel="stylesheet" href="/components/datatables.net-bs/css/dataTables.bootstrap.min.css">
         <link rel="stylesheet" href="/components/datatables.net-bs/css/responsive.bootstrap.min.css">
 
+        <!-- Leaflet Measure -->
+        <link rel="stylesheet" href="/components/leaflet-measure/leaflet-measure.css">
+
         <!-- jQuery 3 -->
         <script src="/components/jquery/dist/jquery.min.js"></script>
 
@@ -46,16 +49,23 @@
 
         <!-- Leaflet -->
         <script src="/components/leaflet/leaflet.js"></script>
+
+        <!-- Leaflet Browser Print -->
+        <script src="/components/leaflet-browser-print/leaflet.browser.print.min.js"></script>
+
+        <!-- Leaflet Measure -->
+        <script src="/components/leaflet-measure/leaflet-measure.js"></script>
     </head>
     <body>
         <div id="map"></div>
-
         <button onclick=fullScreenView()>View in fullscreen</button>
-        
+        <div class="coordinate"></div>
+        <button class="print-map">Print Map</button>
 
         <script>
 
-            var map = L.map('map').setView([11.5529, 122.7407], 7);
+            //Leaflet measure (measureControl option)
+            var map = L.map('map', { measureControl: true }).setView([11.5529, 122.7407], 7);
 
             map.zoomControl.setPosition('topright');
 
@@ -73,8 +83,17 @@
             //fullscreen map view
             var map_id = document.getElementById('map');
             function fullScreenView(){
-                
+                map_id.requestFullscreen();
             }
+
+            //Map coordinate
+            map.on('mousemove', function(event){
+                $('.coordinate').html("Lat: " + event.latlng.lat + ", Lng: " + event.latlng.lng);
+            });
+
+            //Map print
+            L.control.browserPrint().addTo(map);            
+            
         </script>
     </body>
 </html>
