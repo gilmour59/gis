@@ -4,14 +4,7 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>GIS</title>
-
-        <style>
-            #map{
-                width:100%;
-                height:400px;
-            }
-        </style>
+        <title>GIS</title>        
 
         <!-- Leaflet -->
         <link rel="stylesheet" href="/components/leaflet/leaflet.css">
@@ -32,6 +25,9 @@
 
         <!-- Leaflet Geocoder -->
         <link rel="stylesheet" href="/components/leaflet-geocoder/Control.Geocoder.css">
+
+        <!-- Style.css -->
+        <link rel="stylesheet" href="/dist/style.css">
 
         <!-- jQuery 3 -->
         <script src="/components/jquery/dist/jquery.min.js"></script>
@@ -70,103 +66,28 @@
         <script src="components/leaflet-geocoder/Control.Geocoder.js"></script>
     </head>
     <body>
-        <div id="map"></div>
-        <button onclick=fullScreenView()>View in fullscreen</button>
-        <div class="coordinate"></div>
-        <button class="print-map">Print Map</button>
+        <div id="map">
+
+            <!-- Map Coordinate -->
+            <div class="leaflet-control map-coordinate">
+                <div class="coordinate"></div>
+            </div>
+
+            <!-- Fullscreen -->
+            <div class="leaflet-control fullscreen">
+                <button class="btn btn-fullscreen">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="1.1em" height="1.1em" fill="currentColor" class="bi bi-arrows-fullscreen" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M5.828 10.172a.5.5 0 0 0-.707 0l-4.096 4.096V11.5a.5.5 0 0 0-1 0v3.975a.5.5 0 0 0 .5.5H4.5a.5.5 0 0 0 0-1H1.732l4.096-4.096a.5.5 0 0 0 0-.707zm4.344 0a.5.5 0 0 1 .707 0l4.096 4.096V11.5a.5.5 0 1 1 1 0v3.975a.5.5 0 0 1-.5.5H11.5a.5.5 0 0 1 0-1h2.768l-4.096-4.096a.5.5 0 0 1 0-.707zm0-4.344a.5.5 0 0 0 .707 0l4.096-4.096V4.5a.5.5 0 1 0 1 0V.525a.5.5 0 0 0-.5-.5H11.5a.5.5 0 0 0 0 1h2.768l-4.096 4.096a.5.5 0 0 0 0 .707zm-4.344 0a.5.5 0 0 1-.707 0L1.025 1.732V4.5a.5.5 0 0 1-1 0V.525a.5.5 0 0 1 .5-.5H4.5a.5.5 0 0 1 0 1H1.732l4.096 4.096a.5.5 0 0 1 0 .707z"/>
+                    </svg>
+                </button>                
+            </div>
+        </div>
+        <button onclick=fullScreenView()>View in fullscreen</button>        
+        <button class="btn btn-primary print-map">Print Map</button>
         <button class="zoom-to-layer">Zoom to Layer</button>
 
         <script src="/data/test.js"></script>
-        <script>
-            //initiate map
-            var map = L.map('map').setView([11.5529, 122.7407], 7);
-
-            map.zoomControl.setPosition('topright');
-
-            //title layer
-            var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            }).addTo(map);
-
-            var stamen_watercolor = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.{ext}', {
-                attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-                subdomains: 'abcd',
-                minZoom: 1,
-                maxZoom: 16,
-                ext: 'jpg'
-            });   
-
-            var stamen_toner = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}{r}.{ext}', {
-                attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-                subdomains: 'abcd',
-                minZoom: 0,
-                maxZoom: 20,
-                ext: 'png'
-            });     
-
-            var first_marker = L.marker([11.5529, 122.7407])
-                .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
-                .openPopup();
-
-            //add map scale
-            L.control.scale({position : 'bottomleft'}).addTo(map);
-
-            //fullscreen map view
-            var map_id = document.getElementById('map');
-            function fullScreenView(){
-                map_id.requestFullscreen();
-            }
-
-            //Map coordinate
-            map.on('mousemove', function(event){
-                $('.coordinate').html("Lat: " + event.latlng.lat + ", Lng: " + event.latlng.lng);
-            });
-
-            //Map print
-            L.control.browserPrint().addTo(map);         
-            
-            //Leaflet measure
-            L.control.measure({ 
-                primaryLengthUnit: 'meters', 
-                secondaryLengthUnit: 'kilometers',
-                primaryAreaUnit: 'sqmeters',
-                secondaryAreaUnit: undefined
-            }).addTo(map);
-
-            //Geojson load using marker cluster
-            var marker_cluster = L.markerClusterGroup();
-            var test_data = L.geoJSON(data, {
-                onEachFeature : function(feature, layer){                    
-                    layer.bindPopup('coordinates: ' + feature.geometry.coordinates[0] + ', ' + feature.geometry.coordinates[1]);
-                } 
-            });
-            
-            test_data.addTo(marker_cluster);
-            marker_cluster.addTo(map);
-
-            //Geocoder (search)
-            L.Control.geocoder().addTo(map);
-
-            //Leaflet layer control
-            var base_maps = {
-                'OSM' : osm,
-                'Water Color Map' : stamen_watercolor,
-                'Stamen Toner Map' : stamen_toner
-            }
-
-            //use this to initiate the marker cluster
-            var overlayer_maps = {
-                'Leaflet First Marker' : first_marker,
-                'GeoJSON Markers' : marker_cluster,
-            }
-
-            L.control.layers(base_maps, overlayer_maps).addTo(map);
-            
-            //Zoom to layer
-            $('.zoom-to-layer').click(function(){
-
-                map.setView([11.5529, 122.7407], 7);
-            });
-        </script>
+        <script src="/dist/main.js"></script>
+        <script src="/dist/web-gis.js"></script>
     </body>
 </html>
