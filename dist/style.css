@@ -17,11 +17,17 @@
 
 .fullscreen{
     position: absolute;    
-    top: 220px;
+    top: 218px;
     right: 10.5px;
 }
 
-.btn-fullscreen{
+.zoom-to-layer{
+    position: absolute;    
+    top: 263px;
+    right: 10.5px;
+}
+
+.btn-tools{
     padding: 6px 8px 1.5px 8px;
     border: 2px solid rgba(34, 108, 134, 0.4);
 }
