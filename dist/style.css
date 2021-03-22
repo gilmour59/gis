@@ -1,6 +1,6 @@
 #map{
     width:100%;
-    height:100vh;
+    height:calc(95vh - 39.3px);
 }
 
 .map-coordinate{
@@ -28,6 +28,7 @@
 }
 
 .btn-tools{
-    padding: 6px 8px 1.5px 8px;
+    background-color: #fff;
+    padding: 0px 8px 1.5px 8px;
     border: 2px solid rgba(34, 108, 134, 0.4);
 }
