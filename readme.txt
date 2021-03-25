@@ -1,3 +1,16 @@
+_______________________________________________
+
+                    TODO
+_______________________________________________
+
+1. Setting validations to restrict same name 
+of uploaded shp
+
+2. Validations for file types
+
+3.
+_______________________________________________
+
 1. Install Java JRE 8
 2. Install Geoserver 2.15.1
 3. Install Geoserver-rest (uhh idk)
@@ -86,3 +99,10 @@ urlpatterns = [
 - Create Superuser in django -
 1. run "python manage.py migrate"
 2. run "python manage.py createsuperuser"
+
+- Migrate models in django -
+1. run "python manage.py makemigrations"
+2. run "python manage.py migrate"
+
+- COPY all the static files from DIR -
+1. run "python manage.py collectstatic"
